@@ -1,66 +1,90 @@
 <template>
   <div id="app" class="p-4 md:pt-8">
+    <main-navigation
+      v-show="showMainNav"
+      @close="showMainNav = false"
+    />
     <div class="container mx-auto">
-      <div class="flex items-center justify-between md:justify-start mb-4 md:mb-12">
-        <h1 class="font-heading mr-6 pt-2 text-gray-800 text-2xl md:text-4xl">Bimaru</h1>
-        <v-button
-          type="primary"
-          @click="showNewGameModal = true"
-        >
-          New Game
-        </v-button>
-      </div>
-      <active-game
-        v-if="game"
-        :game="game"
-      ></active-game>
-
-      <modal
-        v-if="showNewGameModal"
-        @close="showNewGameModal = false"
-      >
-        <div class="font-heading text-2xl text-center">Difficulty</div>
-
-        <div class="flex flex-col mt-8 items-center">
-          <v-button type="primary" class="mb-3" @click="newGame('easy')">Easy</v-button>
-          <v-button type="primary" class="mb-3" @click="newGame('medium')">Medium</v-button>
-          <v-button type="primary" class="mb-3" @click="newGame('hard')">Hard</v-button>
+      <div class="flex items-center justify-between mb-4 md:mb-12">
+        <div>
+          <h1 class="font-heading mr-2 pt-2 text-gray-800 text-2xl md:text-4xl inline-block">Bimaru</h1>
         </div>
-      </modal>
+        <button
+          @click="showMainNav = true"
+          class="w-6 text-gray-700 hover:text-gray-900"
+        >
+          <div class="border border-gray-700 mb-1 hover:border-gray-900"></div>
+          <div class="border border-blue-700 mb-1 hover:border-gray-900"></div>
+          <div class="border border-gray-700 mb-1 hover:border-gray-900"></div>
+          <div class="border border-blue-700 mb-1 hover:border-gray-900"></div>
+        </button>
+      </div>
+
+      <active-game-panel
+        v-if="panel === 'activeGame'"
+        :game="game"
+        :completed-ships="completedShips"
+      />
+
+      <new-game-panel
+        v-show="panel === 'newGame'"
+      />
     </div>
   </div>
 </template>
 
 <script>
-    import ActiveGame from './components/ActiveGame';
-    import Modal from './components/Modal';
-    import Button from './components/Button';
+    import ActiveGamePanel from './components/ActiveGamePanel';
+    import MainNavigation from './components/MainNavigation';
+    import NewGamePanel from './components/NewGamePanel';
 
     export default {
         name: 'app',
         components: {
-            'v-button': Button,
-            Modal,
-            ActiveGame,
+            NewGamePanel,
+            MainNavigation,
+            ActiveGamePanel,
         },
         data() {
             return {
-                showNewGameModal: false,
-                game: this.getRandomGame('easy'),
+                showMainNav: false,
+                panel: 'newGame',
             };
         },
-        methods: {
-            newGame(difficulty) {
-                this.game = this.getRandomGame(difficulty);
-                this.showNewGameModal = false;
+        computed: {
+            game() {
+                return this.$store.getters['activeGame/game'];
             },
-            getRandomGame(difficulty) {
-                const games = this.$store.getters.games.filter(game => game.difficulty === difficulty);
+            completedShips() {
+                return this.$store.getters['activeGame/completedShips'];
+            },
+            hasActiveGame() {
+                return this.game.hasOwnProperty('id');
+            },
+        },
+        methods: {
+            newGame(size) {
+                this.$store.dispatch('newGame', this.getNewGame(size));
+                this.panel = 'activeGame';
+            },
+            getNewGame(size) {
+                const games = this.$store.getters.gamesBySize(size);
 
-                return games[Math.floor(Math.random() * games.length)];
-            }
+                return games[0];
+            },
         },
         created() {
+            if (this.hasActiveGame) {
+                this.panel = 'activeGame';
+            }
+
+            this.$root.$on('app.new_game', (size) => {
+                this.newGame(size);
+            });
+
+            this.$root.$on('app.toggle_panel', (panel) => {
+                this.panel = panel;
+            });
         },
     };
 </script>

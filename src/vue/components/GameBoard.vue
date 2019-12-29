@@ -106,9 +106,8 @@
                 // Also check if we can update any of the 8 neighbours of the clicked cell.
                 this.updateNeighbours(cell);
 
-                // Let parent components know that we have updated the board and that a cell has been clicked.
-                this.emitUpdatedEvent();
-                this.$root.$emit('gameboard.cell_clicked', cell);
+                // Let parent components know that we have updated the board.
+                this.emitBoardUpdatedEvent();
             },
             updateNeighbours(cell) {
                 this.get8Neighbours(cell.x, cell.y).forEach((neighbour) => {
@@ -143,11 +142,10 @@
                     } else {
                         cell.type = 'ship_bottom';
                     }
-                    return;
+                } else {
+                    // When surrounded by two or more ships, the cell should be a "middle" ship.
+                    cell.type = 'ship';
                 }
-
-                // When surrounded by two or more ships, the cell should be a "middle" ship.
-                cell.type = 'ship';
             },
             getCellLabel(x, y) {
                 const type = this.getCellType(x, y);
@@ -218,7 +216,7 @@
                             cell.type = 'water';
                             this.updateNeighbours(cell);
                         });
-                    this.emitUpdatedEvent();
+                    this.emitBoardUpdatedEvent();
                 }
             },
             onColumnCountClick(colIndex) {
@@ -229,10 +227,10 @@
                             cell.type = 'water';
                             this.updateNeighbours(cell);
                         });
-                    this.emitUpdatedEvent();
+                    this.emitBoardUpdatedEvent();
                 }
             },
-            emitUpdatedEvent() {
+            emitBoardUpdatedEvent() {
                 const board = JSON.parse(JSON.stringify(this.board));
                 this.$root.$emit('gameboard.updated', board);
             },

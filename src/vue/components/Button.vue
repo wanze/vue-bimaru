@@ -1,24 +1,9 @@
 <template>
   <div>
-    <button v-if="type === 'default'"
-      class="bg-transparent text-gray-500 py-2 px-4 text-sm border-2 border-gray-500 cursor-pointer"
+    <button
       @click="$emit('click', $event)"
+      :class="classes"
       :disabled="disabled"
-    >
-      <slot></slot>
-    </button>
-    <button v-if="type === 'primary'"
-         class="bg-blue-500 hover:bg-blue-600 text-gray-100 border-b border-blue-600 hover:border-blue-800 hover:text-white text-sm font-semibold py-2 px-4 rounded shadow-md hover:shadow-lg cursor-pointer"
-         @click="$emit('click', $event)"
-         :disabled="disabled"
-    >
-      <slot></slot>
-    </button>
-    <button v-if="type === 'icon'"
-            class="cursor-pointer p-2 border rounded-full"
-            :class="{ 'text-gray-500 border-gray-500' : disabled, 'text-gray-600 border-gray-600 hover:border-gray-800 hover:text-gray-800 shadow-lg' : !disabled }"
-            @click="$emit('click', $event)"
-            :disabled="disabled"
     >
       <slot></slot>
     </button>
@@ -38,5 +23,29 @@
                 default: false,
             },
         },
+        computed: {
+            classes() {
+              const classes = {
+                  'default': 'button -default bg-white p-2 text-sm text-gray-500 cursor-pointer rounded-full shadow-md',
+                  'primary': 'button -primary text-sm bg-blue-400 text-white font-bold py-2 px-4 rounded-lg',
+                  'icon': {
+                      'button -icon button -default bg-white p-2 text-sm text-gray-500 cursor-pointer rounded-full shadow-md opacity-50 cursor-not-allowed': this.disabled,
+                      'button -icon button -default bg-white p-2 text-sm text-gray-500 cursor-pointer rounded-full shadow-md hover:shadow-lg hover:text-gray-700': !this.disabled,
+                  },
+              };
+
+              return classes[this.type];
+            },
+        },
     };
 </script>
+
+<style lang="scss">
+  /*.button {*/
+  /*  box-shadow: 0 3px darken(#4299e1, 10%);*/
+
+  /*  &:hover {*/
+  /*    box-shadow: 0 2px darken(#4299e1, 10%);*/
+  /*  }*/
+  /*}*/
+</style>
