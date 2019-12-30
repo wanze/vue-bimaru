@@ -1,4 +1,4 @@
-const clone = object => JSON.parse(JSON.stringify(object));
+import { clone } from '../../../js/helpers';
 
 export default {
     namespaced: true,
@@ -152,7 +152,8 @@ export default {
         checkIfSolved({ getters, commit }) {
             // As long as we have empty cell, we are not finished.
             if (getters.board.filter(cell => cell.type === 'empty').length) {
-                return false;
+                commit('setSolved', false);
+                return;
             }
 
             // Compare cells with the solution. Any cells not present in the solution must be of type water.
@@ -160,10 +161,9 @@ export default {
                 const solutionCell = getters.game.solution.find(
                     solutionCell => solutionCell.x === cell.x && solutionCell.y === cell.y
                 );
-                if (solutionCell && cell.type !== solutionCell.type) {
+                if ((solutionCell && cell.type !== solutionCell.type) || (!solutionCell && cell.type !== 'water')) {
                     commit('setSolved', false);
-                } else if (!solutionCell && cell.type !== 'water') {
-                    commit('setSolved', false);
+                    return;
                 }
             }
 

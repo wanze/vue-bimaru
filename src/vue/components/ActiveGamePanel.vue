@@ -28,7 +28,7 @@
         />
       </div>
       <div class="w-full md:w-auto flex flex-col items-center">
-        <h2 class="mb-3 md:mb-8 font-heading text-gray-800 text-xl md:text-2xl">Hidden Ships</h2>
+        <h2 class="mb-3 md:mb-8 font-heading text-gray-800 text-lg md:text-xl">Hidden Ships</h2>
         <ships-legend
           :ships="game.ships"
           :size="shipLegendSize"
@@ -43,6 +43,7 @@
     import GameBoard from './GameBoard.vue';
     import ShipsLegend from './ShipsLegend';
     import Button from './Button';
+    import { clone } from '../../js/helpers';
 
     export default {
         name: 'ActiveGamePanel',
@@ -87,7 +88,7 @@
         },
         computed: {
             board() {
-                return JSON.parse(JSON.stringify(this.$store.getters['activeGame/board']));
+                return clone(this.$store.getters['activeGame/board']);
             },
             canUndo() {
                 return this.$store.getters['activeGame/canUndo'];

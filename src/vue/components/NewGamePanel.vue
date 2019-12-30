@@ -1,6 +1,6 @@
 <template>
 <div class="flex flex-col items-center">
-  <div class="font-heading text-2xl mb-8 text-gray-800">New Game</div>
+  <div class="font-heading text-xl mb-8 text-gray-800">New Game</div>
   <ul>
     <li
       v-for="size in availableSizes"

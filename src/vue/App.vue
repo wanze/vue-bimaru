@@ -1,7 +1,7 @@
 <template>
-  <div id="app" class="p-4 md:pt-8">
+  <div id="app" class="p-2 md:p-4 md:pt-8">
     <main-navigation
-      v-show="showMainNav"
+      v-if="showMainNav"
       @close="showMainNav = false"
     />
     <div class="container mx-auto">
@@ -11,12 +11,11 @@
         </div>
         <button
           @click="showMainNav = true"
-          class="w-6 text-gray-700 hover:text-gray-900"
+          class="text-gray-800"
         >
-          <div class="border border-gray-700 mb-1 hover:border-gray-900"></div>
-          <div class="border border-blue-700 mb-1 hover:border-gray-900"></div>
-          <div class="border border-gray-700 mb-1 hover:border-gray-900"></div>
-          <div class="border border-blue-700 mb-1 hover:border-gray-900"></div>
+          <svg class="fill-current w-8 h-8 md:w-10 md:h-10" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+            <path class="heroicon-ui shadow-lg" d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z"/>
+          </svg>
         </button>
       </div>
 
