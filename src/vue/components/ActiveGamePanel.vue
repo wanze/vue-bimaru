@@ -1,5 +1,23 @@
 <template>
   <div class="flex flex-col">
+    <div
+      v-if="isSolved"
+      data-alert-solved
+      class="bg-white p-4 rounded shadow-md mb-8"
+      role="alert"
+      tabindex="0"
+    >
+      <h2 class="font-heading text-gray-800 mb-1">🎉 Congratulations!</h2>
+      <p>
+        You successfully solved this puzzle.
+        <a
+          class="text-blue-700 underline hover:text-blue-900 font-bold"
+          @click="$root.$emit('app.toggle_panel', 'newGame')"
+          href="#"
+        >Play another!
+        </a>
+      </p>
+    </div>
     <div class="flex mb-6 justify-center md:justify-start items-center md:w-2/3 lg:w-1/2">
       <v-button
         class="mr-2"
@@ -24,6 +42,7 @@
         <game-board
           :game="game"
           :board="board"
+          :disabled="isSolved"
           :max-board-width="boardWidth"
         />
       </div>
@@ -68,6 +87,17 @@
                 shipLegendSize: 'normal',
             };
         },
+        watch: {
+            isSolved(solved) {
+                if (solved) {
+                    this.$store.dispatch('finishedGame', this.game);
+
+                    this.$nextTick(() => {
+                        this.$el.querySelector('[data-alert-solved]').focus();
+                    });
+                }
+            },
+        },
         mounted() {
             this.calculateMaxBoardWidth();
             this.calculateShipLegendSize();
@@ -86,13 +116,10 @@
                 return clone(this.$store.getters['activeGame/board']);
             },
             canUndo() {
-                return this.$store.getters['activeGame/canUndo'];
+                return this.$store.getters['activeGame/canUndo'] && !this.isSolved;
             },
             canRedo() {
-                return this.$store.getters['activeGame/canRedo'];
-            },
-            canReset() {
-                return this.$store.getters['activeGame/canReset'];
+                return this.$store.getters['activeGame/canRedo'] && !this.isSolved;
             },
             isSolved() {
                 return this.$store.getters['activeGame/isSolved'];

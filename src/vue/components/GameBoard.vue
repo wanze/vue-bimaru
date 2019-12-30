@@ -80,7 +80,11 @@
             board: {
                 type: Array,
                 required: true,
-            }
+            },
+            disabled: {
+                type: Boolean,
+                default: false,
+            },
         },
         computed: {
             countStyle() {
@@ -94,7 +98,7 @@
         },
         methods: {
             onCellClick(x, y) {
-                if (this.isPuzzleCell(x, y)) {
+                if (this.isPuzzleCell(x, y) || this.disabled) {
                     return;
                 }
 
@@ -210,6 +214,10 @@
                 });
             },
             onRowCountClick(rowIndex) {
+                if (this.disabled) {
+                    return;
+                }
+
                 if (this.game.shipsRows[rowIndex] === 0) {
                     this.board
                         .filter(cell => cell.x === rowIndex)
@@ -221,6 +229,10 @@
                 }
             },
             onColumnCountClick(colIndex) {
+                if (this.disabled) {
+                    return;
+                }
+
                 if (this.game.shipsColumns[colIndex] === 0) {
                     this.board
                         .filter(cell => cell.y === colIndex)
