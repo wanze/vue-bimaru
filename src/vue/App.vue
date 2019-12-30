@@ -36,6 +36,9 @@
     import ActiveGamePanel from './components/ActiveGamePanel';
     import MainNavigation from './components/MainNavigation';
     import NewGamePanel from './components/NewGamePanel';
+    import StoreStorage from '../js/services/StoreStorage';
+
+    const storeStorage = new StoreStorage();
 
     export default {
         name: 'app',
@@ -60,10 +63,20 @@
         },
         methods: {
             newGame(size) {
-                const game = this.$store.getters.nextNewGame(size);
+                const game = this.getNextNewGame(size);
                 this.$store.dispatch('newGame', game);
+                this.$store.dispatch('persistState');
                 this.panel = 'activeGame';
             },
+            getNextNewGame(size) {
+                return this.$store.getters.nextNewGame(size);
+            },
+            persistState() {
+                this.$store.dispatch('persistState', storeStorage);
+            },
+        },
+        beforeCreate() {
+            this.$store.dispatch('loadState', storeStorage);
         },
         created() {
             if (this.game) {
@@ -74,12 +87,18 @@
                 this.newGame(size);
             });
 
+            this.$root.$on('app.finished_game', (game) => {
+                this.$store.dispatch('finishedGame', game);
+                this.persistState();
+            });
+
             this.$root.$on('app.toggle_panel', (panel) => {
                 this.panel = panel;
             });
 
             this.$root.$on('gameboard.updated', (board) => {
                 this.$store.dispatch('activeGame/saveBoard', board);
+                this.persistState();
             });
         },
     };

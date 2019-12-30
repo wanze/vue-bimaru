@@ -3,7 +3,7 @@
     <div
       v-if="isSolved"
       data-alert-solved
-      class="bg-white p-4 rounded shadow-md mb-8"
+      class="bg-white p-4 rounded shadow-md my-6"
       role="alert"
       tabindex="0"
     >
@@ -18,7 +18,7 @@
         </a>
       </p>
     </div>
-    <div class="flex mb-6 justify-center md:justify-start items-center md:w-2/3 lg:w-1/2">
+    <div class="flex mb-4 md:mb-6 justify-center md:justify-start items-center md:w-2/3 lg:w-1/2">
       <v-button
         class="mr-2"
         title="Undo"
@@ -38,7 +38,7 @@
       </v-button>
     </div>
     <div class="flex flex-col md:flex-row">
-      <div class="flex justify-center w-full md:justify-start md:w-2/3 md:mr-8 lg:w-1/2 mb-8" data-game-board-container>
+      <div class="flex justify-center w-full md:justify-start md:w-2/3 md:mr-8 lg:w-1/2 mb-6 md:mb-8" data-game-board-container>
         <game-board
           :game="game"
           :board="board"
@@ -47,7 +47,7 @@
         />
       </div>
       <div class="w-full md:w-auto flex flex-col items-center">
-        <h2 class="mb-3 md:mb-8 font-heading text-gray-800 text-lg md:text-xl">Hidden Ships</h2>
+        <h2 class="hidden md:block md:mb-8 font-heading text-gray-800 text-lg md:text-xl">Hidden Ships</h2>
         <ships-legend
           :ships="game.ships"
           :size="shipLegendSize"
@@ -90,7 +90,7 @@
         watch: {
             isSolved(solved) {
                 if (solved) {
-                    this.$store.dispatch('finishedGame', this.game);
+                    this.$root.$emit('app.finished_game', this.game);
 
                     this.$nextTick(() => {
                         this.$el.querySelector('[data-alert-solved]').focus();

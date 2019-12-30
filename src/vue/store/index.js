@@ -41,13 +41,18 @@ export default new Vuex.Store({
     },
     mutations: {
         updatePlayedGames(state, game) {
-            state.playedGames.push(game.id);
+            if (!state.playedGames.includes(game.id)) {
+                state.playedGames.push(game.id);
+            }
         },
         setCurrentGame(state, game) {
             state.currentGame = game;
         },
         setGames(state, games) {
             state.games = games;
+        },
+        loadState(state, storeStorage) {
+            this.replaceState(Object.assign(state, storeStorage.loadAppState()));
         },
     },
     actions: {
@@ -57,6 +62,12 @@ export default new Vuex.Store({
         },
         finishedGame({ commit }, game) {
             commit('updatePlayedGames', game);
+        },
+        loadState({ commit }, storeStorage) {
+            commit('loadState', storeStorage);
+        },
+        persistState({ state }, storeStorage) {
+            storeStorage.saveAppState(state);
         },
     },
 });

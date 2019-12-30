@@ -53,7 +53,7 @@
         class="count text-center text-gray-700"
         :style="countStyle"
         href="#"
-        @click="onColumnCountClick(y - 1)"
+        @click.prevent="onColumnCountClick(y - 1)"
       >
         {{ game.shipsColumns[y - 1] }}
       </a>
@@ -93,7 +93,7 @@
                 return `width: ${size}px; height: ${size}px; line-height: ${size}px;`;
             },
             cellSize() {
-                return Math.round(this.maxBoardWidth / (this.game.size + 1));
+                return Math.round(this.maxBoardWidth / (this.game.size + 1.5));
             }
         },
         methods: {
