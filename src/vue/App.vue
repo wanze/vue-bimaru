@@ -65,7 +65,7 @@
             newGame(size) {
                 const game = this.getNextNewGame(size);
                 this.$store.dispatch('newGame', game);
-                this.$store.dispatch('persistState');
+                this.persistState();
                 this.panel = 'activeGame';
             },
             getNextNewGame(size) {
