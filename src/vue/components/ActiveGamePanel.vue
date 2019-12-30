@@ -68,11 +68,6 @@
                 shipLegendSize: 'normal',
             };
         },
-        created() {
-            this.$root.$on('gameboard.updated', (board) => {
-                this.$store.dispatch('activeGame/saveBoard', board);
-            });
-        },
         mounted() {
             this.calculateMaxBoardWidth();
             this.calculateShipLegendSize();

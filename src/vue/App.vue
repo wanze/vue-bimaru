@@ -84,6 +84,10 @@
             this.$root.$on('app.toggle_panel', (panel) => {
                 this.panel = panel;
             });
+
+            this.$root.$on('gameboard.updated', (board) => {
+                this.$store.dispatch('activeGame/saveBoard', board);
+            });
         },
     };
 </script>

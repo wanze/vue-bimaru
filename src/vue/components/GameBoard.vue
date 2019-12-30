@@ -63,6 +63,7 @@
 
 <script>
     import Cell from './Cell';
+    import { clone } from '../../js/helpers';
 
     export default {
         name: 'GameBoard',
@@ -231,8 +232,7 @@
                 }
             },
             emitBoardUpdatedEvent() {
-                const board = JSON.parse(JSON.stringify(this.board));
-                this.$root.$emit('gameboard.updated', board);
+                this.$root.$emit('gameboard.updated', clone(this.board));
             },
             updateCellFocus(event) {
                 const keys = ['ArrowUp', 'ArrowRight', 'ArrowDown', 'ArrowLeft'];
