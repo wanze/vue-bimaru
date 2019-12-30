@@ -1,7 +1,6 @@
 export default [
     {
-        difficulty: 'easy',
-        id: 'easy-1',
+        id: '9-1',
         size: 9,
         puzzle: [
             { x: 0, y: 2, type: 'water' },
@@ -43,8 +42,7 @@ export default [
         ],
     },
     {
-        difficulty: 'medium',
-        id: 'medium-1',
+        id: '9-2',
         size: 9,
         puzzle: [
             { x: 1, y: 4, type: 'water' },

@@ -3,7 +3,7 @@ import { clone } from '../../../js/helpers';
 export default {
     namespaced: true,
     state: {
-        game: {},
+        game: null,
         board: [],
         completedShips: {},
         undoStack: [],

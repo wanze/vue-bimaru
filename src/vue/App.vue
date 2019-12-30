@@ -20,7 +20,7 @@
       </div>
 
       <active-game-panel
-        v-if="panel === 'activeGame'"
+        v-if="panel === 'activeGame' && game"
         :game="game"
         :completed-ships="completedShips"
       />
@@ -57,23 +57,16 @@
             completedShips() {
                 return this.$store.getters['activeGame/completedShips'];
             },
-            hasActiveGame() {
-                return this.game.hasOwnProperty('id');
-            },
         },
         methods: {
             newGame(size) {
-                this.$store.dispatch('newGame', this.getNewGame(size));
+                const game = this.$store.getters.nextNewGame(size);
+                this.$store.dispatch('newGame', game);
                 this.panel = 'activeGame';
-            },
-            getNewGame(size) {
-                const games = this.$store.getters.gamesBySize(size);
-
-                return games[0];
             },
         },
         created() {
-            if (this.hasActiveGame) {
+            if (this.game) {
                 this.panel = 'activeGame';
             }
 

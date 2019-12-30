@@ -20,7 +20,24 @@ export default new Vuex.Store({
         playedGames: state => state.playedGames,
         currentGame: state => state.currentGame,
         gamesBySize: state => size => state.games.filter(game => game.size === size),
-        availableSizes: state => [... new Set(state.games.map(game => game.size))],
+        availableSizes: state => [...new Set(state.games.map(game => game.size))],
+        nextNewGame: (state, getters) => (size) => {
+            // Remove already played games and the current game from the available games.
+            const games = getters.gamesBySize(size);
+            const candidates = games.filter((game) => {
+                if (getters.currentGame && getters.currentGame.id === game.id) {
+                    return false;
+                }
+
+                return !getters.playedGames.includes(game.id);
+            });
+
+            if (candidates.length) {
+                return candidates[0];
+            }
+
+            return games[Math.floor(Math.random() * games.length)];
+        },
     },
     mutations: {
         updatePlayedGames(state, game) {
