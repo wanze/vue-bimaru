@@ -26,7 +26,7 @@ export default {
             state.board = board;
         },
         setGame(state, game) {
-            state.game = clone(game);
+            state.game = game;
         },
         undo(state) {
             state.redoStack.push(clone(state.board));

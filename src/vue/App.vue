@@ -5,7 +5,7 @@
       @close="showMainNav = false"
     />
     <div class="container mx-auto">
-      <div class="flex items-center justify-between mb-4 md:mb-12">
+      <div class="flex items-center justify-between md:mb-12">
         <div>
           <h1 class="font-heading mr-2 pt-2 text-gray-800 text-2xl md:text-4xl inline-block">Bimaru</h1>
         </div>

@@ -88,7 +88,7 @@
                 return `width: ${size}px; height: ${size}px; line-height: ${size}px;`;
             },
             cellSize() {
-                return Math.round(this.maxBoardWidth / (this.game.size + 2));
+                return Math.round(this.maxBoardWidth / (this.game.size + 1));
             }
         },
         methods: {

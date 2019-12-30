@@ -20,7 +20,7 @@
       </v-button>
     </div>
     <div class="flex flex-col md:flex-row">
-      <div class="flex justify-center w-full md:justify-start md:w-2/3 lg:w-1/2 mb-8" data-game-board-container>
+      <div class="flex justify-center w-full md:justify-start md:w-2/3 md:mr-8 lg:w-1/2 mb-8" data-game-board-container>
         <game-board
           :game="game"
           :board="board"
@@ -28,10 +28,10 @@
         />
       </div>
       <div class="w-full md:w-auto flex flex-col items-center">
-        <h2 class="mb-8 font-heading text-gray-800 text-xl md:text-2xl">Hidden Ships</h2>
+        <h2 class="mb-3 md:mb-8 font-heading text-gray-800 text-xl md:text-2xl">Hidden Ships</h2>
         <ships-legend
           :ships="game.ships"
-          :cell-size="30"
+          :size="shipLegendSize"
           :completed-ships="completedShips"
         />
       </div>
@@ -64,6 +64,7 @@
         data() {
             return {
                 boardWidth: 600,
+                shipLegendSize: 'normal',
             };
         },
         created() {
@@ -73,12 +74,14 @@
         },
         mounted() {
             this.calculateMaxBoardWidth();
+            this.calculateShipLegendSize();
 
             let resizeTimer;
             window.addEventListener('resize', () => {
                 clearTimeout(resizeTimer);
                 resizeTimer = setTimeout(() => {
                     this.calculateMaxBoardWidth();
+                    this.calculateShipLegendSize();
                 }, 250);
             });
         },
@@ -103,6 +106,9 @@
             calculateMaxBoardWidth() {
                 const $container = this.$el.querySelector('[data-game-board-container]');
                 this.boardWidth = Math.min($container.clientWidth, 600);
+            },
+            calculateShipLegendSize() {
+                this.shipLegendSize = window.innerWidth <= 600 ? 'small' : 'normal';
             },
             undo() {
                 this.$store.dispatch('activeGame/undo');
