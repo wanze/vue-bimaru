@@ -1,5 +1,5 @@
-# Bimaru
+# Battleships Solitaire
 
-A Vue.js implementation of the amazing Bimaru (battleship) logic puzzle game.
+A Vue.js implementation of the amazing logic puzzle game.
 
 > WIP, more information coming soon. 🤠
