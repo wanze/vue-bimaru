@@ -4,7 +4,8 @@
     tabindex="0"
   >
     <div class="flex">
-      <div class="game-board shadow-xl">
+<!--      border border-gray-600-->
+      <div class="game-board shadow-lg">
         <div
           v-for="x in game.size"
           :key="'row' + x"
@@ -93,7 +94,7 @@
                 return `width: ${size}px; height: ${size}px; line-height: ${size}px;`;
             },
             cellSize() {
-                return Math.round(this.maxBoardWidth / (this.game.size + 1.5));
+                return Math.round(this.maxBoardWidth / (this.game.size + 1.2));
             }
         },
         methods: {

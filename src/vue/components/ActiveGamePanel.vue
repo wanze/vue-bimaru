@@ -38,7 +38,7 @@
       </v-button>
     </div>
     <div class="flex flex-col md:flex-row">
-      <div class="flex justify-center w-full md:justify-start md:w-2/3 md:mr-8 lg:w-1/2 mb-6 md:mb-8" data-game-board-container>
+      <div class="flex justify-center w-full md:justify-start md:w-2/3 md:mr-8 lg:w-1/2 mb-4 md:mb-8" data-game-board-container>
         <game-board
           :game="game"
           :board="board"

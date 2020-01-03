@@ -7,19 +7,30 @@
       v-if="showMainNav"
       @close="showMainNav = false"
     />
-    <div class="container mx-auto p-2 md:p-4 md:pt-8 flex-grow">
+    <div class="container mx-auto p-2 flex-grow">
       <div class="flex items-center justify-between md:mb-12">
         <div>
-          <h1 class="font-heading mr-2 pt-2 text-gray-800 text-2xl md:text-4xl inline-block">Bimaru</h1>
+          <h1
+            class="font-heading mr-2 pt-2 text-gray-800 text-2xl md:text-4xl"
+          >
+            Battleships
+          </h1>
         </div>
         <button
           @click="showMainNav = true"
-          class="text-gray-800"
         >
-          <svg class="fill-current w-8 h-8 md:w-10 md:h-10" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-               width="24" height="24">
-            <path class="heroicon-ui shadow-lg"
-                  d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z"/>
+          <svg class="w-8 h-8 md:w-10 md:h-10" width="20" height="20" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+              <g id="menu" transform="translate(1.000000, 3.000000)" fill-rule="nonzero">
+                <path
+                  d="M1,0 L17,0 C17.5522847,0 18,0.44771525 18,1 C18,1.55228475 17.5522847,2 17,2 L1,2 C0.44771525,2 0,1.55228475 0,1 C0,0.44771525 0.44771525,0 1,0 Z"
+                  id="Path" fill="#2D3748"/>
+                <path
+                  d="M1,6 L17,6 C17.5522847,6 18,6.44771525 18,7 C18,7.55228475 17.5522847,8 17,8 L1,8 C0.44771525,8 0,7.55228475 0,7 C0,6.44771525 0.44771525,6 1,6 Z"
+                  id="Path" fill="#2B6CB0"/>
+                <path
+                  d="M1,12 L17,12 C17.5522847,12 18,12.4477153 18,13 C18,13.5522847 17.5522847,14 17,14 L1,14 C0.44771525,14 0,13.5522847 0,13 C0,12.4477153 0.44771525,12 1,12 Z"
+                  id="Path" fill="#2D3748"/>
+              </g>
           </svg>
         </button>
       </div>
@@ -35,40 +46,7 @@
       />
 
     </div>
-    <footer
-      class="md:bg-gray-300 text-gray-600 md:text-gray-700 text-xs mt-4"
-    >
-      <div class="container mx-auto px-4 py-2 md:py-8">
-        <div class="flex justify-between md:justify-start">
-          <div class="flex flex-col md:flex-row">
-            <div v-if="game">
-              Current puzzle: <span class="font-semibold">{{ game.id }}</span>
-            </div>
-
-            <div class="text-gray-500 inline-block px-2 hidden md:block">/</div>
-
-            <div>
-              Puzzles by <a class="font-semibold underline hover:no-underline"
-                            href="https://krazydad.com">krazydad.com</a>
-            </div>
-
-            <div class="text-gray-500 inline-block px-2 hidden md:block">/</div>
-          </div>
-          <div class="flex flex-col md:flex-row">
-            <div>
-              Made with <span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" class="inline-block mr-1 w-5 h-5"><path class="heroicon-ui fill-current" d="M12.76 3.76a6 6 0 0 1 8.48 8.48l-8.53 8.54a1 1 0 0 1-1.42 0l-8.53-8.54a6 6 0 0 1 8.48-8.48l.76.75.76-.75zm7.07 7.07a4 4 0 1 0-5.66-5.66l-1.46 1.47a1 1 0 0 1-1.42 0L9.83 5.17a4 4 0 1 0-5.66 5.66L12 18.66l7.83-7.83z"/></svg></span>by <a href="https://twitter.com/schtifu" class="font-semibold underline hover:no-underline">Stifu</a>
-            </div>
-
-            <div class="text-gray-500 inline-block px-2 hidden md:block">/</div>
-
-            <div>
-              <span><svg xmlns="http://www.w3.org/2000/svg" class="inline-block mr-1 w-5 h-5" viewBox="0 0 24 24" width="24" height="24"><path class="heroicon-ui fill-current" d="M20.59 12l-3.3-3.3a1 1 0 1 1 1.42-1.4l4 4a1 1 0 0 1 0 1.4l-4 4a1 1 0 0 1-1.42-1.4l3.3-3.3zM3.4 12l3.3 3.3a1 1 0 0 1-1.42 1.4l-4-4a1 1 0 0 1 0-1.4l4-4a1 1 0 0 1 1.42 1.4L3.4 12zm7.56 8.24a1 1 0 0 1-1.94-.48l4-16a1 1 0 1 1 1.94.48l-4 16z"/></svg></span>
-              Fork me on <a href="https://github.com/wanze/vue-bimaru" class="font-semibold underline hover:no-underline">GitHub</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </footer>
+    <app-footer :game="game"/>
   </div>
 </template>
 
@@ -77,12 +55,14 @@
     import MainNavigation from './components/MainNavigation';
     import NewGamePanel from './components/NewGamePanel';
     import StoreStorage from '../js/services/StoreStorage';
+    import AppFooter from './components/AppFooter';
 
     const storeStorage = new StoreStorage();
 
     export default {
         name: 'app',
         components: {
+            AppFooter,
             NewGamePanel,
             MainNavigation,
             ActiveGamePanel,

@@ -12,7 +12,7 @@
         @click="emitClose()"
         data-close
       >
-        <svg class="fill-current w-5 h-5" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        <svg class="fill-current w-8 h-8 md:w-6 md:h-6" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg">
           <g stroke="none" stroke-width="1" fill-rule="evenodd">
             <g id="icon-shape">
               <polygon id="Combined-Shape"
